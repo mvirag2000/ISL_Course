@@ -1,1 +1,1 @@
-# ISL_Course
+In Spring of 2024, Hastie & Tibshirani's classic "Intro to Statistical Learning" comes out in a revised version using Python instead of R, so I buy it and work my way through the book as usual, but there is also a Stanford Online course through edX and so, for good measure, I sign up for that. Unfortunately, the course is seriously abridged from the textbook so I will be challenged to keep the pace while still working through all the coding exercises as I would like, which kind of defeats my original purpose in buying the book. 
