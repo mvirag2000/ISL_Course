@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d2630426-8607-4019-acd7-d2bc249eee93</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Chap3.py</StartupFile>
+    <StartupFile>Exer3.9.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Chap3.py" />
+    <Compile Include="Exer3.9.py" />
+    <Compile Include="Exer3.8.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
