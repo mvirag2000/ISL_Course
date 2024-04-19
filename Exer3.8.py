@@ -45,6 +45,7 @@ X = design.transform(Auto) # It handles multiple predictors, and the intercept
 Auto['resid'] = results.resid # statsmodels.regression.linear_model.OLSResults has many cool attributes
 ax2 = fig.add_subplot(2,2,2)
 ax2.set_title('Residuals')
+ax2.axhline(0, c='red', linewidth=2)
 ax2.scatter(Auto['horsepower'], Auto['resid'], s=dots)
 
 X['hp_squared'] = X['horsepower'] ** 2
@@ -60,6 +61,7 @@ ax3 = ax3.plot(Auto['horsepower'], Auto['fitter'], 'red', linewidth=2)
 
 ax4 = fig.add_subplot(2,2,4)
 ax4.set_title('Residuals')
+ax4.axhline(0, c='red', linewidth=2)
 Auto['resid'] = results.resid # Overwrite old residuals
 ax4.scatter(Auto['horsepower'], Auto['resid'], s=dots)
 
