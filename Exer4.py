@@ -6,10 +6,11 @@ import numpy as np
 import pandas as pd
 from pandas.api.types import is_numeric_dtype, is_object_dtype
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 import statsmodels.api as sm
 from statsmodels.stats.anova import anova_lm
 from statsmodels.stats.outliers_influence import variance_inflation_factor as VIF
-from ISLP import load_data
+from ISLP import confusion_table, load_data
 from ISLP.models import (ModelSpec as MS, summarize, poly) # This is the special ISLP library 
 from sklearn.linear_model import LogisticRegression
 def frame_stats(df):
@@ -30,7 +31,7 @@ def frame_stats(df):
     print('Cols = ' + str(df.shape[1]))
     for col in cat_vars:
         print(col+': ', pd.unique(df[col]), '\n')
-    return num_vars, cat_vars
+    return df.shape[0], df.shape[1], num_vars, cat_vars
 def crossplot(df):
     cols = df.shape[1]
     pos = 1
@@ -71,9 +72,8 @@ def heatmap(df):
     ax.set_yticklabels(df.columns)
     plt.show()
 
-
 stocks = load_data('Weekly') # The course data is at https://www.statlearning.com/resources-python 
-num_vars, cat_vars = frame_stats(stocks)  
+rows, cols, num_vars, cat_vars = frame_stats(stocks)  
 # crossplot(stocks)
 # print(stocks.corr(numeric_only=True).round(decimals=2))
 # heatmap(stocks[num_vars])
@@ -94,3 +94,38 @@ print(results.summary())
 model = LogisticRegression(random_state=42).fit(X, y)
 print(model.score(X, y))
 print(model.coef_)
+
+# Confusion Table
+probs = results.predict()
+labels = np.array(['Down']*rows)
+labels[probs>0.5] = 'Up'
+print(confusion_table(labels, stocks['Direction']))
+
+# Scatter Plot
+fig = plt.figure(figsize=(5,5))
+ax = fig.add_subplot(111)
+colors = np.where(stocks['Direction'] == 'Up', 'green', 'red') 
+ax.scatter(stocks['Lag1'], stocks['Lag2'], s=5, color=colors)
+
+# Box Plot
+stocks.boxplot(column=['Lag1', 'Lag2'], by='Direction', return_type='axes')
+# plt.show()
+
+# Question (d) - Use only Lag2 and split test set 
+train = (stocks.Year < 2009)
+X_train, X_test = X.loc[train], X.loc[~train]
+y_train, y_test = y.loc[train], y.loc[~train]
+X_train = X_train[['Lag2']].copy()
+X_test = X_test[['Lag2']].copy()
+glm = sm.GLM(y_train,
+             X_train,
+             family=sm.families.Binomial())
+results = glm.fit()
+print(results.summary())
+
+probs = results.predict(exog=X_test)
+rows = X_test.shape[0]
+labels = np.array([False]*rows) # Keeping Up and Down straight is easier than T/F 
+labels[probs>0.5] = True
+print(confusion_table(labels, y_test))
+print(np.mean(labels == y_test))
