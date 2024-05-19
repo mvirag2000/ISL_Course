@@ -113,19 +113,22 @@ stocks.boxplot(column=['Lag1', 'Lag2'], by='Direction', return_type='axes')
 
 # Question (d) - Use only Lag2 and split test set 
 train = (stocks.Year < 2009)
+model = MS(['Lag2']).fit(stocks)
+X = model.transform(stocks)
 X_train, X_test = X.loc[train], X.loc[~train]
 y_train, y_test = y.loc[train], y.loc[~train]
-X_train = X_train[['Lag2']].copy()
-X_test = X_test[['Lag2']].copy()
 glm = sm.GLM(y_train,
              X_train,
              family=sm.families.Binomial())
 results = glm.fit()
 print(results.summary())
 
+D = stocks.Direction  # D is pandas Series
+L_train, L_test = D.loc[train], D.loc[~train]
+
 probs = results.predict(exog=X_test)
 rows = X_test.shape[0]
-labels = np.array([False]*rows) # Keeping Up and Down straight is easier than T/F 
-labels[probs>0.5] = True
-print(confusion_table(labels, y_test))
-print(np.mean(labels == y_test))
+labels = np.array(['Down']*rows)  # Keeping Up and Down straight is easier than T/F 
+labels[probs>0.5] = 'Up'
+print(confusion_table(labels, L_test))
+print(np.mean(labels == L_test))
