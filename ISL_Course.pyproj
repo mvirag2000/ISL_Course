@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d2630426-8607-4019-acd7-d2bc249eee93</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Quiz5.py</StartupFile>
+    <StartupFile>Quiz7.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,7 @@
     <Compile Include="Exer4.py" />
     <Compile Include="Exer3.9.py" />
     <Compile Include="Exer3.8.py" />
+    <Compile Include="Quiz7.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

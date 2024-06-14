@@ -2,7 +2,6 @@
 # So I am doing them on Google Colab 
 # The exercises, I am doing in Studio 
 
-from tracemalloc import stop
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
