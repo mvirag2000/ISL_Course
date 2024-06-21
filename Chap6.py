@@ -1,5 +1,5 @@
 ###
-### I want to plot the Ridge Regression with varying Lambda like in the book
+### Plotting the Ridge Regression with varying Lambda like in the book
 ### 
 import numpy as np
 import pandas as pd
