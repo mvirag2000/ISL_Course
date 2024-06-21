@@ -11,7 +11,7 @@ from statsmodels.stats.anova import anova_lm
 from statsmodels.stats.outliers_influence import variance_inflation_factor as VIF
 from ISLP import load_data
 from ISLP.models import (ModelSpec as MS, summarize, poly) # This is the special ISLP library 
-from ISLP.models import sklearn_sm
+from ISLP.models import sklearn_sm, bs, ns
 from pandas.api.types import is_numeric_dtype, is_object_dtype
 def frame_stats(df):
     stats = pd.DataFrame(columns=df.columns, index=('Type', 'Min', 'Max', 'Mean'))
@@ -46,11 +46,11 @@ y_train = train_set['Y']
 y_test = test_set['Y']
 test_mse=[]
 train_mse=[]
-degree = range(1,10)
-for d in degree:
-    spec = MS([poly('X', degree=d)]).fit(train_set)
-    X_train = spec.transform(train_set)
-    X_test = spec.transform(test_set)
+df = range(3,10)
+for d in df:
+    bspline = MS([bs('X', df=d, degree=3)]).fit(train_set)
+    X_train = bspline.transform(train_set)
+    X_test = bspline.transform(test_set)
     model = sm.OLS(y_train, X_train).fit()
     train_mse.append(mse(y_train, X_train, model))
     test_mse.append(mse(y_test, X_test, model))
@@ -58,11 +58,11 @@ for d in degree:
 fig = plt.figure(figsize=(10,5))
 axx1 = fig.add_subplot(1,1,1)
 #axx1.plot(Data['X'], model.fittedvalues, color='red')
-axx1.plot(degree, test_mse, label='Test')
+axx1.plot(df, test_mse, label='Test')
 axx1.set_xlabel('Degree')
 axx1.set_ylabel('MSE')
 
 #axx1.scatter(Data['X'], Data['Y'], s=9, alpha=0.6, color='grey')
-axx1.plot(degree, train_mse, label='Train')
+axx1.plot(df, train_mse, label='Train')
 axx1.legend();
 plt.show()
