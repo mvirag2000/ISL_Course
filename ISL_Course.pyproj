@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Chap6.py" />
+    <Compile Include="Distro.py" />
     <Compile Include="Quiz5.py" />
     <Compile Include="Exer4.py" />
     <Compile Include="Exer3.9.py" />
