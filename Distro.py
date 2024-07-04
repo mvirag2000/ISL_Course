@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns 
 from scipy.stats import norm
 
-
+# This is taken from the famous study, How Big is a Burrito
+# https://x.com/tanayj/status/1806423072238616781 
+#
 mean = 21
 std_dev = 3
 x = np.linspace(-2*std_dev+mean, 2*std_dev+mean, 1000)
