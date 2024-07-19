@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d2630426-8607-4019-acd7-d2bc249eee93</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Hitters.py</StartupFile>
+    <StartupFile>MNIST.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,7 @@
     <Compile Include="Chap6.py" />
     <Compile Include="Distro.py" />
     <Compile Include="Hitters.py" />
+    <Compile Include="MNIST.py" />
     <Compile Include="Quiz5.py" />
     <Compile Include="Exer4.py" />
     <Compile Include="Exer3.9.py" />
