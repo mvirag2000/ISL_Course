@@ -2,7 +2,8 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow import keras 
 from os import path, getcwd, chdir
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, log_loss
+import numpy as np 
 
 mnist = tf.keras.datasets.mnist
 (x_train, y_train),(x_test, y_test) = mnist.load_data()
@@ -24,23 +25,40 @@ def build_model(n_hidden=1, n_neurons=256, learning_rate=0.001):
     model.summary()
     return model
 
-model = build_model(1, 100, 0.01) 
-history = model.fit(x_train, y_train, epochs=100, verbose=3, callbacks=[keras.callbacks.EarlyStopping(monitor='loss', patience=3)])
+test_acc_list = []
+parms_list = []
+test_loss_list = []
+train_loss_list = []
 
-parms = model.count_params()
-loss = history.history['loss'][-1]
+for nodes in np.arange(100, 110, 10):
 
-y_pred = model.predict(x_train).argmax(axis=1)
-train_acc = accuracy_score(y_train, y_pred)
+    model = build_model(1, nodes, 0.01) 
+    history = model.fit(x_train, y_train, epochs=100, verbose=3, callbacks=[keras.callbacks.EarlyStopping(monitor='loss', patience=3)])
+    parms = model.count_params()
+ 
+    y_pred = model.predict(x_train)
+    train_loss = log_loss(y_train, y_pred) 
+    train_acc = accuracy_score(y_train, y_pred.argmax(axis=1))
 
-y_pred = model.predict(x_test.reshape((-1,28,28))).argmax(axis=1)
-test_acc = accuracy_score(y_test, y_pred)
+    y_pred = model.predict(x_test)
+    test_loss = log_loss(y_test, y_pred)
+    test_acc = accuracy_score(y_test, y_pred.argmax(axis=1))
 
-print("\nRESULTS")
-print("Train accuracy: " + str(train_acc))
-print("Test accuracy: " + str(test_acc))
-print("Parameters: " + str(parms))
-print("Training loss: " + str(loss))
+    print("\nRESULTS")
+    print("Train accuracy: " + str(train_acc))
+    print("Test accuracy: " + str(test_acc))
+    print("Parameters: " + str(parms))
+    print("Training loss:" + str(train_loss)) 
+    
+    test_acc_list = test_acc_list.append(test_acc)
+    parms_list = parms_list.append(parms)
+    test_loss_list = test_loss_list.append(test_loss)
+    train_loss_list = train_loss_list.append(train_loss)  
+
+print(train_loss_list)
+print(test_loss_list)
+print(parms_list)
+print(test_acc_list)
 
 #plt.plot(history.history['loss'], label='Train')
 ## plt.plot(history.history['val_loss'], label='Test')
