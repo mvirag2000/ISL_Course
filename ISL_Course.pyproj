@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d2630426-8607-4019-acd7-d2bc249eee93</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Quiz12.py</StartupFile>
+    <StartupFile>Chap13.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,12 +25,14 @@
     <Compile Include="Distro.py" />
     <Compile Include="Hitters.py" />
     <Compile Include="MNIST.py" />
+    <Compile Include="Parser.py" />
     <Compile Include="Quiz12.py" />
     <Compile Include="Quiz5.py" />
     <Compile Include="Exer4.py" />
     <Compile Include="Exer3.9.py" />
     <Compile Include="Exer3.8.py" />
     <Compile Include="Poly7.py" />
+    <Compile Include="Chap13.py" />
     <Compile Include="Quiz7.py" />
     <Compile Include="Quiz9.py" />
   </ItemGroup>

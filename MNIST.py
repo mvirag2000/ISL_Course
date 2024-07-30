@@ -33,25 +33,35 @@ parms_list = []
 test_loss_list = []
 train_loss_list = []
 
-for nodes in np.arange(10, 61, 2):
+for nodes in np.arange(3, 200, 2):
+    
+    test_acc = 0
+    test_loss = 0
+    train_loss = 0 
+    
+    for trials in np.arange(1, 4, 1): # Do three of each model for smoothing 
 
-    model = build_model(1, nodes, 0.01) 
-    history = model.fit(x_train, y_train, epochs=100, verbose=3, callbacks=[keras.callbacks.EarlyStopping(monitor='loss', patience=3)])
-    parms = model.count_params()
+        model = build_model(1, nodes, 0.01) 
+        history = model.fit(x_train, y_train, epochs=100, verbose=3, callbacks=[keras.callbacks.EarlyStopping(monitor='loss', patience=3)])
+        parms = model.count_params()
  
-    y_pred = model.predict(x_train)
-    train_loss = log_loss(y_train, y_pred) 
-    train_acc = accuracy_score(y_train, y_pred.argmax(axis=1))
+        y_pred = model.predict(x_train)
+        train_loss += log_loss(y_train, y_pred) 
+        # train_acc = accuracy_score(y_train, y_pred.argmax(axis=1)) Don't care about training accuracy 
 
-    y_pred = model.predict(x_test)
-    test_loss = log_loss(y_test, y_pred)
-    test_acc = accuracy_score(y_test, y_pred.argmax(axis=1))
+        y_pred = model.predict(x_test)
+        test_loss += log_loss(y_test, y_pred)
+        test_acc += accuracy_score(y_test, y_pred.argmax(axis=1))
+        
+    test_acc /= trials
+    test_loss /= trials
+    train_loss /= trials
 
-    print("\nRESULTS")
-    print("Train accuracy: " + str(train_acc))
-    print("Test accuracy: " + str(test_acc))
-    print("Parameters: " + str(parms))
-    print("Training loss:" + str(train_loss)) 
+    #print("\nRESULTS")
+    #print("Train accuracy: " + str(train_acc))
+    #print("Test accuracy: " + str(test_acc))
+    #print("Parameters: " + str(parms))
+    #print("Training loss:" + str(train_loss)) 
     
     test_acc_list.append(test_acc)
     parms_list.append(parms)
